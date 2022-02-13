@@ -5,9 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
+import com.example.photo_album.navigation.infrastructure.RootNavigationGraph
 import com.example.photo_album.ui.theme.Photo_albumTheme
 
 class MainActivity : ComponentActivity() {
@@ -15,9 +15,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             Photo_albumTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    Greeting("Android")
+                    StartNavigation()
                 }
             }
         }
@@ -25,14 +24,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    Photo_albumTheme {
-        Greeting("Android")
-    }
+fun StartNavigation(){
+    val navController = rememberNavController()
+    RootNavigationGraph(navController = navController)
 }
