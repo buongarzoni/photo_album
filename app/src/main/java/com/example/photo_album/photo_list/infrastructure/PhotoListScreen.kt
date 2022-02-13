@@ -11,16 +11,14 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
-import com.example.photo_album.R
 import com.example.photo_album.navigation.domain.AlbumRoutes
 import com.example.photo_album.utils.infrastructure.MainTopAppBar
 
 @Composable
-fun PhotoListScreen(navController: NavHostController) {
+fun PhotoListScreen(navController: NavHostController, albumName: String) {
     Scaffold(
-        topBar = { MainTopAppBar(title = stringResource(id = R.string.photo_list_top_app_bar)) },
+        topBar = { MainTopAppBar(title = albumName) },
         content = { ScreenContent(navController = navController) }
     )
 }
