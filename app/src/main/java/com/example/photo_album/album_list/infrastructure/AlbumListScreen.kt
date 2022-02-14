@@ -54,6 +54,9 @@ private fun ScreenContent(navController: NavHostController){
 private fun DisplayAlbums(albums: List<Album>, navController: NavHostController) {
     LazyVerticalGrid(
         cells = GridCells.Fixed(2),
+        contentPadding = PaddingValues(5.dp),
+        verticalArrangement = Arrangement.spacedBy(5.dp),
+        horizontalArrangement = Arrangement.spacedBy(5.dp),
         modifier = Modifier.fillMaxSize()
     ) {
         items(items = albums){ album ->
@@ -81,7 +84,6 @@ private fun AlbumCard(album: Album, navController: NavHostController) {
     Card(
         modifier = Modifier
             .fillMaxSize()
-            .padding(15.dp)
             .clickable { navController.navigate(AlbumRoutes.PhotoList.passAlbumName(album.title)) },
         shape = RoundedCornerShape(10.dp),
         elevation = 4.dp
