@@ -1,6 +1,6 @@
-package com.example.photo_album.photo_list.domain
+package com.example.photo_album.photo_detail.domain
 
-data class Photo(
+data class PhotoModel(
     val name: String,
     val photo_url: String,
     val description: String,

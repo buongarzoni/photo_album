@@ -9,6 +9,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
+import coil.annotation.ExperimentalCoilApi
 import com.example.photo_album.album_list.infrastructure.AlbumListScreen
 import com.example.photo_album.navigation.domain.ALBUM_GRAPH_ROUTE
 import com.example.photo_album.navigation.domain.PHOTO_LIST_KEY_ALBUM_NAME
@@ -19,6 +20,7 @@ import com.example.photo_album.photo_list.application.AlbumGalleryViewModel
 import com.example.photo_album.photo_list.infrastructure.PhotoListScreen
 
 
+@ExperimentalCoilApi
 @ExperimentalFoundationApi
 fun NavGraphBuilder.albumNavigationGraph(
     navController: NavHostController

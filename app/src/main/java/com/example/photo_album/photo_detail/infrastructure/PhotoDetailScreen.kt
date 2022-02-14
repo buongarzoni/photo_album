@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.example.photo_album.photo_list.application.AlbumGalleryViewModel
-import com.example.photo_album.photo_list.domain.Photo
+import com.example.photo_album.photo_detail.domain.PhotoModel
 import com.example.photo_album.utils.infrastructure.MainTopAppBar
 
 @Composable
@@ -35,7 +35,7 @@ private fun ScreenContent(photoName: String, viewModel: AlbumGalleryViewModel){
     }
 }
 @Composable
-private fun DisplayPhotoDetails(photo: Photo) {
+private fun DisplayPhotoDetails(photo: PhotoModel) {
     Box(modifier = Modifier
         .fillMaxSize()
         .background(MaterialTheme.colors.background),

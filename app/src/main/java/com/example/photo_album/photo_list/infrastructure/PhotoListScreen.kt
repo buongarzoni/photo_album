@@ -22,7 +22,7 @@ import com.example.photo_album.R
 import com.example.photo_album.helpers.PhotosMock
 import com.example.photo_album.navigation.domain.AlbumRoutes
 import com.example.photo_album.photo_list.application.AlbumGalleryViewModel
-import com.example.photo_album.photo_list.domain.Photo
+import com.example.photo_album.photo_detail.domain.PhotoModel
 import com.example.photo_album.utils.infrastructure.MainTopAppBar
 
 @ExperimentalFoundationApi
@@ -62,7 +62,7 @@ private fun LoadingContent(){
 
 @ExperimentalFoundationApi
 @Composable
-private fun DisplayAlbumContent(photos: List<Photo>, navController: NavHostController) {
+private fun DisplayAlbumContent(photos: List<PhotoModel>, navController: NavHostController) {
     LazyVerticalGrid(
         cells = GridCells.Fixed(2),
         contentPadding = PaddingValues(5.dp),
@@ -77,7 +77,7 @@ private fun DisplayAlbumContent(photos: List<Photo>, navController: NavHostContr
 }
 
 @Composable
-private fun PhotoCard(photo: Photo, navController: NavHostController) {
+private fun PhotoCard(photo: PhotoModel, navController: NavHostController) {
     Card(
         modifier = Modifier
             .fillMaxSize()
