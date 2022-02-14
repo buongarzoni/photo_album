@@ -15,7 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.annotation.ExperimentalCoilApi
@@ -31,18 +30,17 @@ import com.example.photo_album.utils.infrastructure.MainTopAppBar
 @ExperimentalCoilApi
 @ExperimentalFoundationApi
 @Composable
-fun AlbumListScreen(navController: NavHostController) {
+fun AlbumListScreen(navController: NavHostController, viewModel: AlbumsViewModel) {
     Scaffold(
         topBar = { MainTopAppBar(title = stringResource(id = R.string.gallery_top_app_bar)) },
-        content = { ScreenContent(navController = navController) }
+        content = { ScreenContent(navController = navController, viewModel = viewModel) }
     )
 }
 
 @ExperimentalCoilApi
 @ExperimentalFoundationApi
 @Composable
-private fun ScreenContent(navController: NavHostController){
-    val viewModel: AlbumsViewModel = hiltViewModel()
+private fun ScreenContent(navController: NavHostController, viewModel: AlbumsViewModel){
 
     if (viewModel.state.value.isLoading) {
         LoadingContent()

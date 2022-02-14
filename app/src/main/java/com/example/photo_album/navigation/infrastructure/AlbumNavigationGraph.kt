@@ -31,7 +31,7 @@ fun NavGraphBuilder.albumNavigationGraph(
             val parentEntry = remember { navController.getBackStackEntry(ALBUM_GRAPH_ROUTE)}
             val viewModel = hiltViewModel<AlbumsViewModel>(parentEntry)
 
-            AlbumListScreen(navController = navController)
+            AlbumListScreen(navController = navController, viewModel = viewModel)
         }
 
         composable(
