@@ -77,7 +77,7 @@ private fun LoadingContent(){
 }
 
 @Composable
-fun AlbumCard(album: Album, navController: NavHostController) {
+private fun AlbumCard(album: Album, navController: NavHostController) {
     Card(
         modifier = Modifier
             .fillMaxSize()
