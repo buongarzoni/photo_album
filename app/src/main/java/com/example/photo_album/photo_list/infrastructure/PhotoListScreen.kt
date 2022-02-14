@@ -1,7 +1,8 @@
 package com.example.photo_album.photo_list.infrastructure
 
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
@@ -12,12 +13,14 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import coil.annotation.ExperimentalCoilApi
+import coil.compose.ImagePainter
+import coil.compose.rememberImagePainter
 import com.example.photo_album.R
 import com.example.photo_album.album_list.application.AlbumsViewModel
 import com.example.photo_album.helpers.PhotosMock
@@ -25,6 +28,7 @@ import com.example.photo_album.navigation.domain.AlbumRoutes
 import com.example.photo_album.photo_detail.domain.PhotoModel
 import com.example.photo_album.utils.infrastructure.MainTopAppBar
 
+@ExperimentalCoilApi
 @ExperimentalFoundationApi
 @Composable
 fun PhotoListScreen(navController: NavHostController, albumName: String, viewModel: AlbumsViewModel) {
@@ -34,13 +38,16 @@ fun PhotoListScreen(navController: NavHostController, albumName: String, viewMod
     )
 }
 
+@ExperimentalCoilApi
 @ExperimentalFoundationApi
 @Composable
 private fun ScreenContent(navController: NavHostController, albumName: String, viewModel: AlbumsViewModel){
     val photos = viewModel.state.value
         .albums.first{ album -> albumName == album.name }
         .photos
+
     if (viewModel.state.value.isLoading) {
+        Log.d("PhotoListScreen", "this shouldn't happen")
         LoadingContent()
     }
 
@@ -61,6 +68,7 @@ private fun LoadingContent(){
     }
 }
 
+@ExperimentalCoilApi
 @ExperimentalFoundationApi
 @Composable
 private fun DisplayAlbumContent(photos: List<PhotoModel>, albumName: String, navController: NavHostController) {
@@ -77,6 +85,7 @@ private fun DisplayAlbumContent(photos: List<PhotoModel>, albumName: String, nav
     }
 }
 
+@ExperimentalCoilApi
 @Composable
 private fun PhotoCard(photo: PhotoModel, albumName: String, navController: NavHostController) {
     Card(
@@ -84,32 +93,54 @@ private fun PhotoCard(photo: PhotoModel, albumName: String, navController: NavHo
             .fillMaxSize()
             .clickable {
                 navController.navigate(
-                    AlbumRoutes.PhotoDetail.passPhotoName(albumName = albumName, photoName = photo.name)
-                ) },
+                    AlbumRoutes.PhotoDetail.passPhotoName(
+                        albumName = albumName,
+                        photoName = photo.name
+                    )
+                )
+            },
         shape = RoundedCornerShape(10.dp),
         elevation = 4.dp
     ) {
-
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(
-                modifier = Modifier
-                    .size(224.dp)
-                    .clip(RoundedCornerShape(10.dp))
-                    .background(MaterialTheme.colors.secondary)
-            )
+            AddImage(photoUrl = photo.photo_url, name = photo.name)
         }
     }
 }
 
+@ExperimentalCoilApi
+@Composable
+private fun AddImage(photoUrl: String, name: String) {
+
+    Box(modifier = Modifier
+        .height(224.dp)
+        .width(224.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        val painter = rememberImagePainter(
+            data = photoUrl,
+            builder = {}
+        )
+
+        if (painter.state is ImagePainter.State.Loading) {
+            CircularProgressIndicator()
+        }
+
+        Image(painter = painter, contentDescription = name)
+    }
+}
+
+@ExperimentalCoilApi
 @ExperimentalFoundationApi
 @Composable
 @Preview(showBackground = true)
 fun PreviewDisplayAlbumContent() {
-    DisplayAlbumContent(photos = PhotosMock.fakePhotos, albumName = "album 1",navController = rememberNavController())
+    DisplayAlbumContent(photos = PhotosMock.fakePhotos, albumName = "album 1", navController = rememberNavController())
 }
 
+@ExperimentalCoilApi
 @Composable
 @Preview(showBackground = true)
 fun PreviewPhotoCard() {
