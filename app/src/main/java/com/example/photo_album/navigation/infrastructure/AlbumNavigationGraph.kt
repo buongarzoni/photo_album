@@ -10,13 +10,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
 import coil.annotation.ExperimentalCoilApi
+import com.example.photo_album.album_list.application.AlbumsViewModel
 import com.example.photo_album.album_list.infrastructure.AlbumListScreen
-import com.example.photo_album.navigation.domain.ALBUM_GRAPH_ROUTE
-import com.example.photo_album.navigation.domain.PHOTO_LIST_KEY_ALBUM_NAME
-import com.example.photo_album.navigation.domain.AlbumRoutes
+import com.example.photo_album.navigation.domain.*
 import com.example.photo_album.navigation.domain.PHOTO_DETAIL_KEY_PHOTO_NAME
 import com.example.photo_album.photo_detail.infrastructure.PhotoDetailScreen
-import com.example.photo_album.photo_list.application.AlbumGalleryViewModel
 import com.example.photo_album.photo_list.infrastructure.PhotoListScreen
 
 
@@ -30,6 +28,9 @@ fun NavGraphBuilder.albumNavigationGraph(
         route = ALBUM_GRAPH_ROUTE
     ) {
         composable(route = AlbumRoutes.AlbumList.route){
+            val parentEntry = remember { navController.getBackStackEntry(ALBUM_GRAPH_ROUTE)}
+            val viewModel = hiltViewModel<AlbumsViewModel>(parentEntry)
+
             AlbumListScreen(navController = navController)
         }
 
@@ -41,17 +42,18 @@ fun NavGraphBuilder.albumNavigationGraph(
         ){
             val albumName = it.arguments?.getString(PHOTO_LIST_KEY_ALBUM_NAME)!!
             val parentEntry = remember { navController.getBackStackEntry(ALBUM_GRAPH_ROUTE)}
-            val viewModel = hiltViewModel<AlbumGalleryViewModel>(parentEntry)
+            val viewModel = hiltViewModel<AlbumsViewModel>(parentEntry)
 
             PhotoListScreen(navController = navController, albumName = albumName, viewModel = viewModel)
         }
 
         composable(route = AlbumRoutes.PhotoDetail.route){
+            val albumName = it.arguments?.getString(PHOTO_DETAIL_KEY_ALBUM_NAME)!!
             val photoName = it.arguments?.getString(PHOTO_DETAIL_KEY_PHOTO_NAME)!!
             val parentEntry = remember { navController.getBackStackEntry(ALBUM_GRAPH_ROUTE)}
-            val viewModel = hiltViewModel<AlbumGalleryViewModel>(parentEntry)
+            val viewModel = hiltViewModel<AlbumsViewModel>(parentEntry)
 
-            PhotoDetailScreen(photoName = photoName, viewModel = viewModel)
+            PhotoDetailScreen(photoName = photoName, albumName = albumName, viewModel = viewModel)
         }
     }
 }

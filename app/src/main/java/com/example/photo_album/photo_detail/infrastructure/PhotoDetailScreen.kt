@@ -11,28 +11,29 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.example.photo_album.photo_list.application.AlbumGalleryViewModel
+import com.example.photo_album.album_list.application.AlbumsViewModel
 import com.example.photo_album.photo_detail.domain.PhotoModel
 import com.example.photo_album.utils.infrastructure.MainTopAppBar
 
 @Composable
-fun PhotoDetailScreen(photoName: String, viewModel: AlbumGalleryViewModel) {
+fun PhotoDetailScreen(albumName: String, photoName: String, viewModel: AlbumsViewModel) {
     Scaffold(
         topBar = { MainTopAppBar(title = photoName) },
-        content = { ScreenContent(photoName = photoName, viewModel = viewModel) }
+        content = { ScreenContent(albumName = albumName, photoName = photoName, viewModel = viewModel) }
     )
 }
 
 @Composable
-private fun ScreenContent(photoName: String, viewModel: AlbumGalleryViewModel){
+private fun ScreenContent(albumName: String, photoName: String, viewModel: AlbumsViewModel){
+    val photo = viewModel.state.value
+        .albums.first{ album -> albumName == album.name }
+        .photos.first { photo -> photoName == photo.name }
+
     if (viewModel.state.value.isLoading) {
         Log.d("PhotoDetailScreen", "this shouldn't happen")
     }
 
-    if (viewModel.state.value.photos.isNotEmpty()) {
-        val photo = viewModel.state.value.photos.first { photo -> photoName == photo.name }
-        DisplayPhotoDetails(photo = photo)
-    }
+    DisplayPhotoDetails(photo = photo)
 }
 @Composable
 private fun DisplayPhotoDetails(photo: PhotoModel) {
