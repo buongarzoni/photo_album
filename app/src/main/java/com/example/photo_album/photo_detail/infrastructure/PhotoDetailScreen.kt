@@ -5,7 +5,7 @@ import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -15,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
@@ -31,6 +32,7 @@ import com.example.photo_album.R
 import com.example.photo_album.album_list.application.AlbumsViewModel
 import com.example.photo_album.photo_detail.domain.PhotoModel
 import com.example.photo_album.utils.infrastructure.MainTopAppBar
+import com.example.photo_album.utils.infrastructure.animatedShimmerBrush
 
 @ExperimentalCoilApi
 @Composable
@@ -74,7 +76,12 @@ private fun AddImage(photoUrl: String, name: String, mustShowDetails: MutableSta
     val painter = rememberImagePainter(data = photoUrl)
 
     if (painter.state is ImagePainter.State.Loading) {
-        CircularProgressIndicator()
+        Spacer(
+            modifier = Modifier
+                .fillMaxSize()
+                .clip(RoundedCornerShape(5))
+                .background(animatedShimmerBrush())
+        )
     }
 
     Image(painter = painter, contentDescription = name, modifier = Modifier

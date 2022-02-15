@@ -2,6 +2,7 @@ package com.example.photo_album.album_list.infrastructure
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
@@ -12,6 +13,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -26,6 +28,7 @@ import com.example.photo_album.album_list.domain.AlbumModel
 import com.example.photo_album.helpers.AlbumsMock
 import com.example.photo_album.navigation.domain.AlbumRoutes
 import com.example.photo_album.utils.infrastructure.MainTopAppBar
+import com.example.photo_album.utils.infrastructure.animatedShimmerBrush
 
 @ExperimentalCoilApi
 @ExperimentalFoundationApi
@@ -118,7 +121,12 @@ private fun AddImage(photoUrl: String, name: String) {
         )
 
         if (painter.state is ImagePainter.State.Loading) {
-            CircularProgressIndicator()
+            Spacer(
+                modifier = Modifier
+                    .size(224.dp)
+                    .clip(RoundedCornerShape(5))
+                    .background(animatedShimmerBrush())
+            )
         }
 
         Image(painter = painter, contentDescription = name)
