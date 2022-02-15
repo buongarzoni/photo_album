@@ -3,4 +3,6 @@
     <string name="gallery_top_app_bar">Álbumes</string>
     <string name="searching_albums">Buscando álbumes</string>
     <string name="searching_album_content">Buscando contenido del álbum</string>
+    <string name="photo_detail_screen_description">Descripción</string>
+    <string name="photo_detail_screen_date_created">Fecha</string>
 </resources>
