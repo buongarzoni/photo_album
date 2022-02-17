@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.photo_album.album_list.domain.AlbumsState
 import com.example.photo_album.web.apis.jsonplaceholder.application.JSONPlaceholderRepository
+import com.example.photo_album.web.apis.jsonplaceholder.domain.AlbumsDTO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -33,8 +34,16 @@ constructor(
             }
 
             response.data?.let { albumsDTO ->
-                _state.value = AlbumsState(albums = albumsDTO.toModel())
+                updateStateWithAlbumsDTOValue(albumsDTO = albumsDTO)
             }
+        }
+    }
+
+    private fun updateStateWithAlbumsDTOValue(albumsDTO: AlbumsDTO) {
+        when {
+            albumsDTO.albums == null -> _state.value = AlbumsState(errorMessage = "Error en el servidor, por favor reintente luego")
+            albumsDTO.albums.isEmpty() -> _state.value = AlbumsState(errorMessage = "Actualmente no hay álbumes en la base de datos")
+            else -> _state.value = AlbumsState(albums = albumsDTO.toModel())
         }
     }
 }
