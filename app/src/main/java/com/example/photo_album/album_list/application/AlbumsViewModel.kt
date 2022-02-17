@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.photo_album.album_list.domain.AlbumsState
 import com.example.photo_album.web.apis.jsonplaceholder.application.JSONPlaceholderRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,7 +25,7 @@ constructor(
     }
 
     private fun getAlbums() {
-        viewModelScope.launch(Dispatchers.IO){
+        viewModelScope.launch {
             val response = repository.getAlbums()
 
             response.errorMessage?.let { errorMessage ->
