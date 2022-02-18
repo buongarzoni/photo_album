@@ -11,10 +11,14 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -50,8 +54,66 @@ private fun ScreenContent(navController: NavHostController, viewModel: AlbumsVie
         LoadingContent()
     }
 
+    viewModel.state.value.errorMessage?.let { errorMessage ->
+        ShowError(stringResource = errorMessage, viewModel = viewModel)
+    }
+
     if (viewModel.state.value.albums.isNotEmpty()) {
         DisplayAlbums(albums = viewModel.state.value.albums, navController = navController)
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun LoadingContent(){
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(12.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(text = stringResource(id = R.string.searching_albums))
+        Spacer(modifier = Modifier.padding(5.dp))
+        CircularProgressIndicator()
+    }
+}
+
+@Composable
+private fun ShowError(stringResource: Int, viewModel: AlbumsViewModel) {
+    val openDialog = remember { mutableStateOf(true) }
+
+    if (openDialog.value)
+    {
+        AlertDialog(
+            onDismissRequest = {},
+            title = {
+                Text(
+                    text = stringResource(id = R.string.alert_dialog_title_for_error),
+                    color = Color.Black)
+                    },
+            text = {
+                Text(
+                    text = stringResource(id = stringResource),
+                    color = Color.Black)
+                   },
+
+            confirmButton = {
+
+                TextButton(
+                    onClick = {
+                        viewModel.getAlbums()
+                        openDialog.value = false
+                    }
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.alert_dialog_retry_button),
+                        color = Color.Black
+                    ) }
+            },
+            backgroundColor = MaterialTheme.colors.background,
+            contentColor = MaterialTheme.colors.primary
+        )
     }
 }
 
@@ -69,20 +131,6 @@ private fun DisplayAlbums(albums: List<AlbumModel>, navController: NavHostContro
         items(items = albums){ album ->
             AlbumCard(album = album, navController = navController)
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun LoadingContent(){
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(text = stringResource(id = R.string.searching_albums))
-        Spacer(modifier = Modifier.padding(5.dp))
-        CircularProgressIndicator()
     }
 }
 
@@ -109,7 +157,6 @@ private fun AlbumCard(album: AlbumModel, navController: NavHostController) {
 @ExperimentalCoilApi
 @Composable
 private fun AddImage(photoUrl: String, name: String) {
-
     Box(modifier = Modifier
         .height(224.dp)
         .width(224.dp),

@@ -5,4 +5,10 @@
     <string name="searching_album_content">Buscando contenido del álbum</string>
     <string name="photo_detail_screen_description">Descripción</string>
     <string name="photo_detail_screen_date_created">Fecha</string>
+    <string name="content_description_image_not_found_placeholder">Image not found</string>
+    <string name="albums_view_model_default_error_message">Ups, algo falló, por favor verifique su red y reintente luego</string>
+    <string name="albums_view_model_server_error">Error en el servidor, por favor reintente luego</string>
+    <string name="albums_view_model_no_images_in_db_error">Actualmente no hay álbumes en la base de datos</string>
+    <string name="alert_dialog_title_for_error">Error</string>
+    <string name="alert_dialog_retry_button">Reintentar</string>
 </resources>

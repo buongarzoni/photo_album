@@ -1,6 +1,7 @@
 package com.example.photo_album.album_list.application
 
 import com.example.photo_album.CoroutineTestRule
+import com.example.photo_album.R
 import com.example.photo_album.web.apis.jsonplaceholder.application.JSONPlaceholderRepository
 import com.example.photo_album.web.apis.jsonplaceholder.domain.AlbumDTO
 import com.example.photo_album.web.apis.jsonplaceholder.domain.AlbumsDTO
@@ -27,18 +28,17 @@ class AlbumsViewModelTest{
         val viewModel = AlbumsViewModel(repository = repository)
 
         assertTrue(viewModel.state.value.isLoading)
-        assertTrue(viewModel.state.value.errorMessage.isEmpty())
+        assertNull(viewModel.state.value.errorMessage)
         assertTrue(viewModel.state.value.albums.isEmpty())
     }
 
     @Test
     fun `view model state must have repository error message when an error has occurred`() = coroutineTestRule.testDispatcher.runBlockingTest {
-        val errorMessage = "any error"
-        `when`(repository.getAlbums()).thenReturn(Response.Error(errorMessage = errorMessage))
+        `when`(repository.getAlbums()).thenReturn(Response.Error(errorMessage = "any error"))
         val viewModel = AlbumsViewModel(repository = repository)
 
         assertFalse(viewModel.state.value.isLoading)
-        assertEquals(viewModel.state.value.errorMessage, errorMessage)
+        assertEquals(viewModel.state.value.errorMessage, R.string.albums_view_model_default_error_message)
         assertTrue(viewModel.state.value.albums.isEmpty())
     }
 
@@ -48,7 +48,7 @@ class AlbumsViewModelTest{
         val viewModel = AlbumsViewModel(repository = repository)
 
         assertFalse(viewModel.state.value.isLoading)
-        assertEquals(viewModel.state.value.errorMessage, "Error en el servidor, por favor reintente luego")
+        assertEquals(viewModel.state.value.errorMessage, R.string.albums_view_model_server_error)
         assertTrue(viewModel.state.value.albums.isEmpty())
     }
 
@@ -58,7 +58,7 @@ class AlbumsViewModelTest{
         val viewModel = AlbumsViewModel(repository = repository)
 
         assertFalse(viewModel.state.value.isLoading)
-        assertEquals(viewModel.state.value.errorMessage, "Actualmente no hay álbumes en la base de datos")
+        assertEquals(viewModel.state.value.errorMessage, R.string.albums_view_model_no_images_in_db_error)
         assertTrue(viewModel.state.value.albums.isEmpty())
     }
 
@@ -72,7 +72,7 @@ class AlbumsViewModelTest{
         val viewModel = AlbumsViewModel(repository = repository)
 
         assertFalse(viewModel.state.value.isLoading)
-        assertTrue(viewModel.state.value.errorMessage.isEmpty())
+        assertNull(viewModel.state.value.errorMessage)
         assertTrue(viewModel.state.value.albums.isNotEmpty())
     }
 
