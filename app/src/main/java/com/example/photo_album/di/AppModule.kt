@@ -2,6 +2,7 @@ package com.example.photo_album.di
 
 import com.example.photo_album.BuildConfig
 import com.example.photo_album.web.apis.jsonplaceholder.application.JSONPlaceholderRepository
+import com.example.photo_album.web.apis.jsonplaceholder.application.JSONPlaceholderRepositoryInterface
 import com.example.photo_album.web.apis.jsonplaceholder.domain.Constants.JSON_PLACEHOLDER_BASE_URL
 import com.example.photo_album.web.apis.jsonplaceholder.infrastructure.JSONPlaceholderAPI
 import com.google.gson.GsonBuilder
@@ -23,7 +24,7 @@ object AppModule {
     @Provides
     fun provideJSONPlaceholderRepository(
         api: JSONPlaceholderAPI
-    ) = JSONPlaceholderRepository(api)
+    ): JSONPlaceholderRepositoryInterface = JSONPlaceholderRepository(api)
 
     @Singleton
     @Provides

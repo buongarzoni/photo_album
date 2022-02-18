@@ -8,13 +8,10 @@ import java.lang.Exception
 import javax.inject.Inject
 
 @ActivityScoped
-class JSONPlaceholderRepository
-@Inject
-constructor(
-    private val api: JSONPlaceholderAPI
-    ) {
+class JSONPlaceholderRepository @Inject
+constructor(private val api: JSONPlaceholderAPI): JSONPlaceholderRepositoryInterface {
 
-    suspend fun getAlbums(): Response<AlbumsDTO> {
+    override suspend fun getAlbums(): Response<AlbumsDTO> {
         val response = try {
             api.getAlbums()
         } catch (exception: Exception) {

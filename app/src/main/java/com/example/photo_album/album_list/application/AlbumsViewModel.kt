@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.photo_album.album_list.domain.AlbumsState
-import com.example.photo_album.web.apis.jsonplaceholder.application.JSONPlaceholderRepository
+import com.example.photo_album.web.apis.jsonplaceholder.application.JSONPlaceholderRepositoryInterface
 import com.example.photo_album.web.apis.jsonplaceholder.domain.AlbumsDTO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -16,7 +16,7 @@ import javax.inject.Inject
 class AlbumsViewModel
 @Inject
 constructor(
-    private val repository: JSONPlaceholderRepository
+    private val repository: JSONPlaceholderRepositoryInterface
 ): ViewModel() {
     private val _state: MutableState<AlbumsState> = mutableStateOf(AlbumsState(isLoading = true))
     val state: State<AlbumsState> = _state
