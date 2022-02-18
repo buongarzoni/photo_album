@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">photo_album</string>
+    <string name="app_name">Photo Albums</string>
     <string name="gallery_top_app_bar">Álbumes</string>
     <string name="searching_albums">Buscando álbumes</string>
     <string name="searching_album_content">Buscando contenido del álbum</string>
