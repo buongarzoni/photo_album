@@ -1,6 +1,5 @@
 package com.example.photo_album.photo_list.infrastructure
 
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -52,11 +51,6 @@ private fun ScreenContent(navController: NavHostController, albumName: String, v
     val photos = viewModel.state.value
         .albums.first{ album -> albumName == album.name }
         .photos
-
-    if (viewModel.state.value.isLoading) {
-        Log.d("PhotoListScreen", "this shouldn't happen")
-        LoadingContent()
-    }
 
     DisplayAlbumContent(photos = photos, albumName = albumName, navController = navController)
 }

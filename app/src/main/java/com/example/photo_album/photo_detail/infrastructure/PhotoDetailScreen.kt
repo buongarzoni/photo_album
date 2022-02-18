@@ -1,6 +1,5 @@
 package com.example.photo_album.photo_detail.infrastructure
 
-import android.util.Log
 import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.*
@@ -50,10 +49,6 @@ private fun ScreenContent(albumName: String, photoName: String, viewModel: Album
     val photo = viewModel.state.value
         .albums.first{ album -> albumName == album.name }
         .photos.first { photo -> photoName == photo.name }
-
-    if (viewModel.state.value.isLoading) {
-        Log.d("PhotoDetailScreen", "this shouldn't happen")
-    }
 
     DisplayPhotoDetails(photo = photo)
 }
