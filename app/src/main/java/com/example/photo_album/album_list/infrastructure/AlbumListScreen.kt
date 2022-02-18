@@ -16,7 +16,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -87,32 +86,17 @@ private fun ShowError(stringResource: Int, viewModel: AlbumsViewModel) {
     {
         AlertDialog(
             onDismissRequest = {},
-            title = {
-                Text(
-                    text = stringResource(id = R.string.alert_dialog_title_for_error),
-                    color = Color.Black)
-                    },
-            text = {
-                Text(
-                    text = stringResource(id = stringResource),
-                    color = Color.Black)
-                   },
+            title = { Text(text = stringResource(id = R.string.alert_dialog_title_for_error)) },
+            text = { Text(text = stringResource(id = stringResource)) },
 
             confirmButton = {
-
                 TextButton(
                     onClick = {
                         viewModel.getAlbums()
                         openDialog.value = false
                     }
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.alert_dialog_retry_button),
-                        color = Color.Black
-                    ) }
-            },
-            backgroundColor = MaterialTheme.colors.background,
-            contentColor = MaterialTheme.colors.primary
+                ) { Text(text = stringResource(id = R.string.alert_dialog_retry_button)) }
+            }
         )
     }
 }
