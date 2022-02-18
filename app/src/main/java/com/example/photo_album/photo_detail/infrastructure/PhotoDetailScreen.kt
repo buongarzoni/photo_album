@@ -19,6 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -84,10 +85,24 @@ private fun AddImage(photoUrl: String, name: String, mustShowDetails: MutableSta
         )
     }
 
-    Image(painter = painter, contentDescription = name, modifier = Modifier
-        .fillMaxSize()
-        .clickable { mustShowDetails.value = !mustShowDetails.value },
-    alignment = Alignment.Center)
+    if (painter.state is ImagePainter.State.Error) {
+        Image(
+            painter = painterResource(id = R.drawable.image_not_found_placeholder),
+            contentDescription = stringResource(id = R.string.content_description_image_not_found_placeholder),
+            modifier = Modifier.fillMaxSize()
+        )
+    }
+
+    Image(
+        painter = painter,
+        contentDescription = name,
+        modifier = Modifier
+            .fillMaxSize()
+            .clickable {
+                mustShowDetails.value = !mustShowDetails.value
+            },
+        alignment = Alignment.Center
+    )
 }
 
 @Composable

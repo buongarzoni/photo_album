@@ -173,10 +173,19 @@ private fun AddImage(photoUrl: String, name: String) {
             )
         }
 
+        if (painter.state is ImagePainter.State.Error) {
+            Image(
+                painter = painterResource(id = R.drawable.image_not_found_placeholder),
+                contentDescription = stringResource(id = R.string.content_description_image_not_found_placeholder),
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+        }
+
         Image(
             painter = painter,
             contentDescription = name,
-            modifier = Modifier.size(224.dp, 224.dp),
+            modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
         )
     }
