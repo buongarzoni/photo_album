@@ -93,8 +93,7 @@ private fun AlbumCard(album: AlbumModel, navController: NavHostController) {
         modifier = Modifier
             .fillMaxSize()
             .clickable { navController.navigate(AlbumRoutes.PhotoList.passAlbumName(album.name)) },
-        shape = RoundedCornerShape(10.dp),
-        elevation = 4.dp
+        elevation = 1.dp
     ) {
 
         Column(

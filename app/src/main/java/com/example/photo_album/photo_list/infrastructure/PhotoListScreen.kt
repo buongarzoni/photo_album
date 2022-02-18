@@ -105,8 +105,7 @@ private fun PhotoCard(photo: PhotoModel, albumName: String, navController: NavHo
                     )
                 )
             },
-        shape = RoundedCornerShape(10.dp),
-        elevation = 4.dp
+        elevation = 1.dp
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
