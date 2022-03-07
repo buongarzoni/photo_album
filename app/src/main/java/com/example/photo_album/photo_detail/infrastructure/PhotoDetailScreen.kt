@@ -9,7 +9,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -61,14 +60,16 @@ private fun DisplayPhotoDetails(photo: PhotoModel) {
         .fillMaxSize()
         .background(MaterialTheme.colors.background)
     ) {
-        AddImage(photoUrl = photo.photo_url, name = photo.name, mustShowDetails = mustShowDetails)
-        ShowDetails(photo = photo, mustShowDetails = mustShowDetails)
+        AddImage(photoUrl = photo.photo_url, name = photo.name,){
+            mustShowDetails.value = !mustShowDetails.value
+        }
+        ShowDetails(photo = photo, mustShowDetails = mustShowDetails.value)
     }
 }
 
 @ExperimentalCoilApi
 @Composable
-private fun AddImage(photoUrl: String, name: String, mustShowDetails: MutableState<Boolean>) {
+private fun AddImage(photoUrl: String, name: String, imageClicked: () -> Unit) {
     val painter = rememberImagePainter(data = photoUrl)
 
     if (painter.state is ImagePainter.State.Loading) {
@@ -94,17 +95,17 @@ private fun AddImage(photoUrl: String, name: String, mustShowDetails: MutableSta
         modifier = Modifier
             .fillMaxSize()
             .clickable {
-                mustShowDetails.value = !mustShowDetails.value
+                imageClicked()
             },
         alignment = Alignment.Center
     )
 }
 
 @Composable
-private fun ShowDetails(photo: PhotoModel, mustShowDetails: MutableState<Boolean>) {
+private fun ShowDetails(photo: PhotoModel, mustShowDetails: Boolean) {
     val screenHeight = LocalConfiguration.current.screenHeightDp
     AnimatedVisibility (
-        visible = mustShowDetails.value,
+        visible = mustShowDetails,
         enter = enterAnimatedTransition(screenHeight = screenHeight),
         exit = exitAnimatedTransition(screenHeight = screenHeight)
     ) {
